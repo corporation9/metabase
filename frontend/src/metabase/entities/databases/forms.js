@@ -222,6 +222,14 @@ function isHiddenField(field, details) {
   );
 }
 
+function normalizeFieldValue(value, field) {
+  if (field.name === "host") {
+    return value.trim();
+  }
+
+  return value;
+}
+
 function getEngineFormFields(engine, details, id) {
   const engineInfo = getEngineInfo(engine, details, id);
   const engineFields = engineInfo ? engineInfo["details-fields"] : [];
@@ -245,7 +253,7 @@ function getEngineFormFields(engine, details, id) {
             return "default" in field ? field.default : null;
           }
 
-          return value;
+          return normalizeFieldValue(value, field);
         },
         horizontal: field.type === "boolean",
         initial: field.default,
